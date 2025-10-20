@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useMutation, QueryClient, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../utils/axios";
 import { CreateTodoModal } from "./components/createTodoModal";
 import { EditTodoModal } from "./components/editTodoModal";
@@ -12,16 +12,13 @@ import type { Todo } from "./components/editTodoModal";
 
 import SignOutGithubButton from "./components/signout-github-button";
 
-export const queryClient = new QueryClient();
-
 export default function HomePage() {
+  const queryClient = useQueryClient();
 
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const todosPerPage: number = 10;
-  
 
-  // Query cache
   const {
     data: todos = [],
     isLoading,
@@ -34,7 +31,6 @@ export default function HomePage() {
     },
   });
 
-  // Search + pagination
   const filteredData = todos.filter((todo) =>
     todo.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -44,7 +40,6 @@ export default function HomePage() {
   );
   const totalPages = Math.max(1, Math.ceil(filteredData.length / todosPerPage));
 
-  // Create
   const createTodoMutation = useMutation<Todo, Error, Omit<Todo, "id">>({
     mutationFn: async (newTodo: Omit<Todo, "id">): Promise<Todo> => {
       try {
@@ -72,7 +67,6 @@ export default function HomePage() {
     },
   });
 
-  // Update
   const updateTodoMutation = useMutation<Todo | void, Error, Todo>({
     mutationFn: async (updatedTodo: Todo): Promise<Todo | void> => {
       const { id, title, completed } = updatedTodo;
@@ -84,10 +78,11 @@ export default function HomePage() {
       }
 
       try {
-        const res = await axiosInstance.put<Todo>(
-          `/todos/${id}`,
-          { title, completed, userId: 1 } 
-        );
+        const res = await axiosInstance.put<Todo>(`/todos/${id}`, {
+          title,
+          completed,
+          userId: 1,
+        });
         return res.data;
       } catch (error) {
         console.log("JSONPlaceholder error, using local data:", error);
@@ -106,26 +101,23 @@ export default function HomePage() {
     },
   });
 
-  // Delete
   const deleteTodoMutation = useMutation<
     string | number,
     Error,
     string | number
   >({
     mutationFn: async (id: string | number): Promise<string | number> => {
-     const isClientTodo = String(id).startsWith("client-");
+      const isClientTodo = String(id).startsWith("client-");
 
-     if (!isClientTodo) {
-       // Only call API for original JSONPlaceholder todos
-       try {
-         await axiosInstance.delete(`/todos/${id}`);
-       } catch (error) {
-         console.log("JSONPlaceholder error (expected):", error);
-       }
-     }
+      if (!isClientTodo) {
+        try {
+          await axiosInstance.delete(`/todos/${id}`);
+        } catch (error) {
+          console.log("JSONPlaceholder error (expected):", error);
+        }
+      }
 
-     return id;
-
+      return id;
     },
     onSuccess: (id: string | number): void => {
       toast.success("Task deleted!");
@@ -138,7 +130,6 @@ export default function HomePage() {
     },
   });
 
-  // Handlers
   const handleAdd = async (newTodo: Omit<Todo, "id">): Promise<void> => {
     await createTodoMutation.mutateAsync(newTodo);
   };
@@ -247,4 +238,3 @@ export default function HomePage() {
     </main>
   );
 }
-//page.tsx

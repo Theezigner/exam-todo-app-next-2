@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.90.5",
+    "@tanstack/react-query-devtools": "^5.90.2",
     "@tanstack/react-query-next-experimental": "^5.90.2",
     "axios": "^1.12.2",
     "daisyui": "^5.3.7",

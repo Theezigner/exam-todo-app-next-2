@@ -2,8 +2,8 @@
 
 import type { ReactNode } from "react";
 import { ThemeToggle } from "./components/themeToggle";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "./page";
+import { QueryProvider } from "./components/QueryProvider";
+
 import "./globals.css";
 
 type LayoutProps = {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body>
-        <QueryClientProvider client={queryClient}>
+        <QueryProvider>
           <main className="relative max-w-lg mx-auto p-4">
             <header className="flex flex-col">
               <div className="flex flex-row gap-2 absolute items-center right-6 ">
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: LayoutProps) {
             </header>
             {children}
           </main>
-        </QueryClientProvider>
+        </QueryProvider>
       </body>
     </html>
   );
