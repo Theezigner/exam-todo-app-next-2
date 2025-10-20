@@ -1,6 +1,7 @@
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
-import Link from "next/link"; 
+import Link from "next/link";
 import { Metadata } from "next";
+
 type Todo = {
   id: string;
   title: string;
@@ -8,7 +9,6 @@ type Todo = {
 };
 
 const getTodo = async (id: string): Promise<Todo> => {
-  
   await new Promise((resolve) => setTimeout(resolve, 50));
 
   if (id === "1") {
@@ -19,13 +19,13 @@ const getTodo = async (id: string): Promise<Todo> => {
   return { id: id, title: "unknown task", completed: false };
 };
 
-interface TodoDetailPageProps {
-  params: { id: string };
-}
+type TodoDetailParams = { id: string };
 
 export async function generateMetadata({
   params,
-}: TodoDetailPageProps): Promise<Metadata> {
+}: {
+  params: TodoDetailParams;
+}): Promise<Metadata> {
   const todo = await getTodo(params.id);
 
   return {
@@ -36,7 +36,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function TodoDetailPage({ params }: TodoDetailPageProps) {
+export default async function TodoDetailPage({
+  params,
+}: {
+  params: TodoDetailParams;
+}) {
   const todo = await getTodo(params.id);
 
   return (
