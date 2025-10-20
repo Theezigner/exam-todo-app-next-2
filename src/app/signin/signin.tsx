@@ -16,10 +16,10 @@ export default function SignIn() {
 
   const [message, setMessage] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prev) => ({ ...prev, [name]: value }));
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,7 +42,7 @@ export default function SignIn() {
       } else {
         setMessage(data.error || "Something went wrong.");
       }
-    } catch (err) {
+    } catch (_err) {
       setMessage("Server error.");
     }
   };

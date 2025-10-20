@@ -64,7 +64,7 @@ export function DeleteTodoModal({ todo, onDelete }: DeleteTodoModalProps) {
 
             <p>
               Are you sure you want to delete{" "}
-              <span className="font-semibold">"{todo.title}"</span>?
+              <span className="font-semibold">{todo.title}</span>?
             </p>
 
             <footer className="modal-action">

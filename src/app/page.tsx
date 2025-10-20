@@ -21,8 +21,6 @@ export default function HomePage() {
 
   const {
     data: todos = [],
-    isLoading,
-    isError,
   } = useQuery<Todo[]>({
     queryKey: ["todos"],
     queryFn: async (): Promise<Todo[]> => {
