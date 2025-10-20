@@ -21,11 +21,13 @@ const getTodo = async (id: string): Promise<Todo> => {
 
 type TodoDetailParams = { id: string };
 
+interface TodoDetailPageProps {
+  params: TodoDetailParams;
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: TodoDetailParams;
-}): Promise<Metadata> {
+}: TodoDetailPageProps): Promise<Metadata> {
   const todo = await getTodo(params.id);
 
   return {
@@ -36,11 +38,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function TodoDetailPage({
-  params,
-}: {
-  params: TodoDetailParams;
-}) {
+export default async function TodoDetailPage({ params }: TodoDetailPageProps) {
   const todo = await getTodo(params.id);
 
   return (
