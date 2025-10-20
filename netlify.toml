@@ -1,0 +1,8 @@
+[build]
+  command = "pnpm install && pnpm build"
+
+[build.environment]
+  # Set the package manager to pnpm
+  NPM_VERSION = "pnpm" 
+  # Optional, but can help with the global cache
+  NPM_FLAGS = "--prefix /opt/build/repo/pnpm"
