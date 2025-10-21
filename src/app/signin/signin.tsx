@@ -51,20 +51,7 @@ export default function SignIn() {
       <form onSubmit={handleSubmit} className="space-y-4">
        
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition disabled:bg-blue-400"
-          disabled={isLoading}
-        >
-          {isLoading ? "Signing In..." : "Sign In"}
-        </button>
-
-        <div className="relative flex items-center py-5">
-          <div className="flex-grow border-t border-gray-400"></div>
-          <span className="flex-shrink mx-4 text-gray-400">OR</span>
-          <div className="flex-grow border-t border-gray-400"></div>
-        </div>
-
+        
         <section className="flex flex-col items-center space-y-3">
           <GoogleButton
             onClick={() => handleSocialSignIn("google")}
