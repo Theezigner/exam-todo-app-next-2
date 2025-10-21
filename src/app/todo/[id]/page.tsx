@@ -8,6 +8,11 @@ type Todo = {
   completed: boolean;
 };
 
+type PageProps = {
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
 const getTodo = async (id: string): Promise<Todo> => {
   await new Promise((resolve) => setTimeout(resolve, 50));
 
@@ -19,15 +24,9 @@ const getTodo = async (id: string): Promise<Todo> => {
   return { id: id, title: "unknown task", completed: false };
 };
 
-type TodoDetailParams = { id: string };
-
-interface TodoDetailPageProps {
-  params: TodoDetailParams;
-}
-
-export async function generateMetadata({
-  params,
-}: TodoDetailPageProps): Promise<Metadata> {
+// ✅ Fixed: Properly typed with PageProps
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const todo = await getTodo(params.id);
 
   return {
@@ -38,7 +37,9 @@ export async function generateMetadata({
   };
 }
 
-export default async function TodoDetailPage({ params }: TodoDetailPageProps) {
+// ✅ Fixed: Properly typed with PageProps
+export default async function TodoDetailPage(props: PageProps) {
+  const params = await props.params;
   const todo = await getTodo(params.id);
 
   return (

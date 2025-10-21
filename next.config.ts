@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Suppress the workspace root warning by explicitly setting the root
+  outputFileTracingRoot: process.cwd(),
 };
 
 export default nextConfig;
