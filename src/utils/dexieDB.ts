@@ -1,5 +1,5 @@
 import Dexie from "dexie";
-import type { Table } from "dexie"; // 👈 type-only import
+import type { Table } from "dexie"; 
 
 export type Todo = {
   id: number;
