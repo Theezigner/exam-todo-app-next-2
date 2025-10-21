@@ -49,27 +49,7 @@ export default function SignIn() {
       <h1 className="text-2xl text-center font-bold mb-4">Sign In</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          required
-          placeholder="Email Address"
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-          disabled={isLoading}
-        />
-
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          required
-          placeholder="Password"
-          onChange={handleChange}
-          className="w-full px-4 py-2 border rounded border-gray-300 dark:border-gray-600 dark:bg-gray-700"
-          disabled={isLoading}
-        />
+       
 
         <button
           type="submit"
